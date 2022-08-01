@@ -4,6 +4,8 @@
 #include <basis/seadTypes.h>
 #include "KingSystem/Resource/resHandle.h"
 #include "KingSystem/Utils/Types.h"
+#include "KingSystem/World/worldManager.h"
+#include "KingSystem/ActorSystem/actActor.h"
 
 namespace al {
 class ByamlIter;
