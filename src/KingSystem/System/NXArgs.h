@@ -1,33 +1,19 @@
 #pragma once
 
 #include <basis/seadNew.h>
-#include <codec/seadHashCRC32.h>
 #include <container/seadBuffer.h>
 #include <heap/seadDisposer.h>
 #include <heap/seadExpHeap.h>
 #include <math/seadVector.h>
 #include <nn/oe.h>
 #include <prim/seadSafeString.h>
-#include "KingSystem/ActorSystem/actActorSystem.h"
-#include "KingSystem/ActorSystem/actInfoData.h"
-#include "KingSystem/ActorSystem/actInstParamPack.h"
-#include "KingSystem/ActorSystem/actPlayerInfo.h"
-#include "KingSystem/GameData/gdtCommonFlagsUtils.h"
-#include "KingSystem/GameData/gdtManager.h"
-#include "KingSystem/Physics/System/physRayCastBodyQuery.h"
-#include "KingSystem/System/StageInfo.h"
 #include "KingSystem/Utils/Types.h"
 
 namespace ksys {
 
 class nxargs {
     SEAD_SINGLETON_DISPOSER(nxargs)
-    nxargs() {
-        mNumEntries = 0;
-        mResField4 = 0;
-        mResField6 = 0;
-        mType = ArgsType::None;
-    }
+    nxargs() : mResField4{0}, mResField6{0}, mType{ArgsType::None}, mNumEntries{0} {}
     virtual ~nxargs();
 
 public:
@@ -102,10 +88,10 @@ public:
     void handleArgs();
 
 private:
-    u16 mResField4 = 0;
+    u16 mResField4;
     u8 mResField6;
     ArgsType mType;
-    u8 mNumEntries = 0;
+    u8 mNumEntries;
     sead::Buffer<LaunchParamEntry> mEntries;
     bool mHasHandledArgs = false;
 };
