@@ -61,45 +61,18 @@ void nxargs::allocEntries(sead::Heap* heap, nxargs::ResLaunchParamData* data) {
 
         if (numConditions > 0) {
             currEntry->conditions.allocBufferAssert(numConditions, heap);
-            if (currEntry->numConditions) {
-                for (u8 j = 0; j < currEntry->numConditions; j++) {
-                    LaunchParamEntryCondition* currCondition = &currEntry->conditions[j];
-                    currCondition->flagNameHash = bitCastPtr<u32>(data, offset);
-                    currCondition->flagDataType =
-                        bitCastPtr<LaunchParamEntryConditionDataType>(data, offset + 4);
-                    currCondition->operation =
-                        bitCastPtr<ActorEntryConditionOperation>(data, offset + 5);
-                    currCondition->rhsValue = bitCastPtr<f32>(data, offset + 8);
-                    offset += 0xc;
-                }
+            for (u8 j = 0; j < currEntry->numConditions; j++) {
+                LaunchParamEntryCondition* currCondition = &currEntry->conditions[j];
+                currCondition->flagNameHash = bitCastPtr<u32>(data, offset);
+                currCondition->flagDataType =
+                    bitCastPtr<LaunchParamEntryConditionDataType>(data, offset + 4);
+                currCondition->operation =
+                    bitCastPtr<ActorEntryConditionOperation>(data, offset + 5);
+                currCondition->rhsValue = bitCastPtr<f32>(data, offset + 8);
+                offset += 0xc;
             }
         }
     }
-}
-
-// TODO
-void nxargs::handleArgs() {
-    ksys::act::InfoData* aid;
-    sead::BufferedSafeString* mapType;
-    char value[19];
-    if (mHasHandledArgs  // |
-                         //! DebugBoardMgr::hasLoadingScreenStarted() | // 710089bb14
-                         //! Root4::checkFlag() | // 71008bce34
-                         //! ksys::evt::Manager::hasEvent() //7100db1364
-    )
-        return;
-    if (mType == ArgsType::None)
-        return;
-    *mapType = ksys::StageInfo::getCurrentMapType();
-    if (*mapType != "TitleMenu" | *mapType != "STAGESELECT" | *mapType != "")
-        return;
-    if (!(ksys::gdt::getFlag_IsGet_PlayerStole2(0) && ksys::StageInfo::sIsMainField))
-        return;
-    if (this->mHasHandledArgs)
-        return;
-    if (!mNumEntries)
-        return;
-    aid = ksys::act::InfoData::instance();
 }
 
 }  // namespace ksys
