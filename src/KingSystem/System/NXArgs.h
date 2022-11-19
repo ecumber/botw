@@ -60,7 +60,7 @@ public:
         sead::Vector3f positionOffset;
         sead::Vector3f rotation;
         sead::Vector3f velocity;
-        LaunchParamFlag flags{0};
+        LaunchParamFlag flags{};
         u8 numConditions;
         sead::Buffer<LaunchParamEntryCondition> conditions;
     };
